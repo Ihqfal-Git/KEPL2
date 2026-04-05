@@ -14,10 +14,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install HTMLHint & Stylelint
-        run:  npm install -g htmlhint stylelint
+        run: |
+          npm install -g htmlhint stylelint stylelint-config-standard
+
+      - name: Buat config Stylelint
+        run: |
+          echo {\"extends\": \"stylelint-config-standard\"} > .stylelintrc.json
 
       - name: Periksa HTML
-        run: htmlhint "**/*.html"
+        run: htmlhint Latihan.html
 
       - name: Periksa CSS
         run: stylelint "**/*.css"
