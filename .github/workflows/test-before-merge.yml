@@ -1,28 +1,24 @@
-name: Automasi Testing Sebelum Merge
+name: Test Before Merge
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  test:
-    runs-on: windows-latest
+  test-code:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install HTMLHint & Stylelint
+      - name: Install dependencies
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard
+          npm install -g htmlhint
+          npm install -g stylelint stylelint-config-standard
 
-      - name: Buat config Stylelint
-        run: |
-          echo {\"extends\": \"stylelint-config-standard\"} > .stylelintrc.json
+      - name: Run HTMLHint
+        run: htmlhint "**/*.html"
 
-      - name: Periksa HTML
-        run: htmlhint Latihan.html
-
-      - name: Periksa CSS
+      - name: Run Stylelint
         run: stylelint "**/*.css"
